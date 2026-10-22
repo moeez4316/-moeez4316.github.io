@@ -35,3 +35,20 @@ figcaption{font-size:.85rem;color:var(--mute)}
 code{font-size:.88em;background:var(--soft);padding:1px 5px;border-radius:3px}
 footer{text-align:center;color:var(--mute);font:13px system-ui,sans-serif;padding:28px}
 @media(max-width:620px){.hero{flex-direction:column}.hero img{width:160px}h1{font-size:2rem}}
+.contactbar{background:var(--soft);border:1px solid var(--line);border-radius:6px;margin:28px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;padding:10px 16px;font:14px system-ui,sans-serif;color:var(--mute)}
+.contactbar a{text-decoration:none}.contactbar a:hover{text-decoration:underline}
+.fig{margin:14px 0;padding:10px;background:var(--soft);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:600px;height:auto}
+.fig figcaption{margin-top:8px}
+.fig .b{fill:var(--bg);stroke:var(--line);stroke-width:1.2}
+.fig .a{fill:var(--bg);stroke:var(--acc);stroke-width:1.6}
+.fig .bad{stroke:var(--acc);stroke-dasharray:4 3}
+.fig .g{fill:none;stroke:var(--mute);stroke-dasharray:5 4}
+.fig .l{fill:none;stroke:var(--acc);stroke-width:1.5}
+.fig .m{fill:var(--acc)}
+.fig .t{fill:var(--fg);font:600 13px system-ui,sans-serif}
+.fig .s{fill:var(--mute);font:11.5px system-ui,sans-serif}
+.fig .c{text-anchor:middle}
+.tbl{width:100%;border-collapse:collapse;font-size:.95rem;margin:10px 0}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+.tbl th{font:600 .8rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}

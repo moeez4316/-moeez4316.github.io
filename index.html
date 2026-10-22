@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Moeez Ahmed – Computer Science Researcher</title>
-<meta name="description" content="Moeez Ahmed: BS Computer Science (CGPA 3.72/4.00). Interests: machine learning, computer vision, LLMs and cybersecurity. Applying for a master's in China.">
+<title>Moeez Ahmed – Computer Science &amp; Security Researcher</title>
+<meta name="description" content="Moeez Ahmed: BS Computer Science (CGPA 3.72/4.00). Interests: cybersecurity, secure multi-tenant systems, AI security, machine learning and computer vision. Applying for a master's in China.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="top">
   <nav>
-    <a href="#about">About</a><a href="#research">Research</a><a href="#project">Face recognition</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    <a href="#about">About</a><a href="#research">Research</a><a href="#project">Face recognition</a><a href="#security">Security</a><a href="#tabeeb">TABEEB</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
   </nav>
 </header>
 
@@ -21,7 +21,7 @@
   <div>
     <h1>Moeez Ahmed</h1>
     <p class="lead">BS Computer Science, COMSATS University Islamabad, Lahore · CGPA 3.72 / 4.00</p>
-    <p>I want to grow into an independent researcher, learning research methods under expert supervision in a master's programme in China. My interests are machine learning, computer vision, large language models and cybersecurity. What I care about most is making models reliable: rigorous evaluation, calibration, and knowing where a system breaks.</p>
+    <p>I want to grow into an independent researcher, learning research methods under expert supervision in a master's programme in China. My interests are cybersecurity (secure system design, access control, the security of AI-enabled systems), machine learning, computer vision and large language models. What I care about most is making systems reliable and hard to break: adversarial testing, rigorous evaluation, calibration, and knowing where a system fails.</p>
     <p class="links">
       <a class="btn" href="assets/Moeez_Ahmed_CV.pdf">Download CV (PDF)</a>
       <a class="btn ghost" href="https://github.com/moeez4316">GitHub</a>
@@ -30,28 +30,61 @@
   </div>
 </section>
 
+<div class="contactbar">
+  <a href="mailto:moeez4316@gmail.com">moeez4316@gmail.com</a>
+  <a href="mailto:moeez.ahmed.cs@gmail.com">moeez.ahmed.cs@gmail.com</a>
+  <span>WeChat: <b>moeez_ahmed</b></span>
+  <a href="https://github.com/moeez4316">github.com/moeez4316</a>
+</div>
+
 <section id="research">
   <h2>Research interests</h2>
   <ul class="tags">
-    <li>Machine learning &amp; deep learning</li>
-    <li>Computer vision</li>
+    <li>Secure multi-tenant systems &amp; access control</li>
+    <li>Authentication &amp; authorization security</li>
+    <li>Security of AI &amp; LLM systems</li>
+    <li>Biometric data protection</li>
+    <li>Adversarial &amp; penetration testing</li>
+    <li>ML for intrusion &amp; anomaly detection</li>
+    <li>Machine learning &amp; computer vision</li>
     <li>Metric learning &amp; open-set recognition</li>
     <li>Evaluation &amp; calibration</li>
-    <li>LLMs &amp; retrieval-augmented generation</li>
-    <li>Hallucination &amp; faithfulness</li>
-    <li>Multimodal learning</li>
-    <li>Cyberspace / information security</li>
+    <li>LLMs, RAG &amp; faithfulness</li>
   </ul>
-  <p class="note">Coursework: 4.00 / 4.00 in Machine Learning, Linear Algebra, Algorithms and Information Security; 3.66 in Artificial Intelligence. Final Year Project 4.00, supervised by Prof. Dr. Zulfiqar Habib.</p>
+  <p class="note">Coursework: 4.00 / 4.00 in Information Security, Machine Learning, Linear Algebra and Algorithms; 3.66 in Artificial Intelligence. Final Year Project 4.00, supervised by Prof. Dr. Zulfiqar Habib.</p>
 </section>
 
 <section id="project">
   <h2>Multi-camera face-recognition attendance system</h2>
   <p class="meta">Industry project, 2026 · Inspirer Technologies · technical write-up of the recognition core</p>
 
-  <h3>Pipeline</h3>
-  <p class="pipeline"><span>Camera frame</span><span>YuNet detection</span><span>5-point alignment</span><span>SFace 128-d embedding</span><span>Cosine match</span></p>
-  <p>Each camera runs in its own worker thread; a shared inference thread embeds detected faces and compares them with enrolled identities (multi-image embeddings are averaged per person). Detection and recognition both use Apache-2.0 models from the OpenCV Zoo, run through <code>cv2.dnn</code>. I replaced an earlier non-commercial-licensed model (InsightFace <code>buffalo_l</code>) after auditing the licences of the model weights and their training data, accepting a lighter model in exchange for a deployable one.</p>
+  <h3>How it works</h3>
+  <p>Each camera runs in its own worker thread. A single shared inference thread takes frames from all of them, finds and aligns each face, turns it into an embedding, and compares that embedding with the people enrolled. If the best match clears the threshold, the person is identified; otherwise the face is treated as unknown.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 720 300" role="img" aria-labelledby="d1t d1d">
+      <title id="d1t">Face-recognition pipeline</title>
+      <desc id="d1d">Camera worker threads feed one shared inference thread: detection, alignment, embedding and cosine matching against enrolled identities, producing an identity or unknown at threshold 0.46.</desc>
+      <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m" d="M0 0L10 5L0 10z"/></marker></defs>
+      <rect class="b" x="10" y="35" width="130" height="50" rx="6"/><text class="t c" x="75" y="57">Camera 1</text><text class="s c" x="75" y="73">worker thread</text>
+      <rect class="b" x="10" y="97" width="130" height="50" rx="6"/><text class="t c" x="75" y="119">Camera 2</text><text class="s c" x="75" y="135">worker thread</text>
+      <rect class="b" x="10" y="159" width="130" height="50" rx="6"/><text class="t c" x="75" y="181">Camera N</text><text class="s c" x="75" y="197">worker thread</text>
+      <path class="l" marker-end="url(#a1)" d="M140 60H178"/><path class="l" marker-end="url(#a1)" d="M140 122H178"/><path class="l" marker-end="url(#a1)" d="M140 184H178"/>
+      <rect class="g" x="180" y="12" width="330" height="218" rx="8"/><text class="s c" x="345" y="29">Shared inference thread</text>
+      <rect class="b" x="200" y="40" width="290" height="36" rx="5"/><text class="t c" x="345" y="55">YuNet face detection</text><text class="s c" x="345" y="69">OpenCV Zoo, Apache-2.0</text>
+      <rect class="b" x="200" y="88" width="290" height="36" rx="5"/><text class="t c" x="345" y="103">5-point alignment</text><text class="s c" x="345" y="117">eyes, nose, mouth corners</text>
+      <rect class="b" x="200" y="136" width="290" height="36" rx="5"/><text class="t c" x="345" y="151">SFace embedding</text><text class="s c" x="345" y="165">128-d vector per face</text>
+      <rect class="a" x="200" y="184" width="290" height="36" rx="5"/><text class="t c" x="345" y="199">Cosine similarity</text><text class="s c" x="345" y="213">against enrolled identities</text>
+      <path class="l" marker-end="url(#a1)" d="M345 76V88"/><path class="l" marker-end="url(#a1)" d="M345 124V136"/><path class="l" marker-end="url(#a1)" d="M345 172V184"/>
+      <rect class="b" x="560" y="174" width="150" height="56" rx="6"/><text class="t c" x="635" y="198">Enrolled identities</text><text class="s c" x="635" y="214">mean embedding per person</text>
+      <path class="l" marker-end="url(#a1)" d="M560 202H492"/>
+      <path class="l" marker-end="url(#a1)" d="M345 220V252"/>
+      <rect class="a" x="200" y="252" width="290" height="40" rx="6"/><text class="t c" x="345" y="269">Similarity ≥ 0.46: identified</text><text class="s c" x="345" y="284">below the threshold: unknown face</text>
+      <rect class="b" x="560" y="250" width="150" height="44" rx="6"/><text class="t c" x="635" y="268">Threshold 0.46</text><text class="s c" x="635" y="284">tuned 0.36 → 0.51 → 0.46</text>
+      <path class="l" marker-end="url(#a1)" d="M560 272H492"/>
+    </svg>
+    <figcaption>One worker thread per camera; one inference thread does detection, alignment, embedding and matching. The threshold was tuned from field failures (see below).</figcaption>
+  </figure>
+  <p>Detection and recognition both use Apache-2.0 models from the OpenCV Zoo, run through <code>cv2.dnn</code>. I replaced an earlier non-commercial-licensed model (InsightFace <code>buffalo_l</code>) after auditing the licences of the model weights and their training data, accepting a lighter model in exchange for a deployable one.</p>
 
   <h3>Benchmark: LFW verification</h3>
   <p>Standard 6,000-pair, 10-fold protocol. The threshold is chosen on nine folds and scored on the held-out fold. Reproducible with a single script; 0 of 6,000 pairs had no face detected.</p>
@@ -70,9 +103,6 @@
   <h3>Threshold calibration from field failures</h3>
   <p>Benchmark accuracy did not transfer cleanly to live cameras: people at a distance were misidentified. I recalibrated the matching threshold <b>0.36 → 0.51 → 0.46</b>, analysing the false-accept versus false-reject trade-off through inter-class and intra-class similarity margins. At the deployed threshold of 0.46 the LFW result is <b>0 false accepts in 3,000 impostor pairs</b> at a <b>5.5% false-reject rate</b>. I also compared the lightweight-versus-accuracy trade-off of SFace against ArcFace-class models.</p>
 
-  <h3>Security of the surrounding system</h3>
-  <p>Tenant isolation uses PostgreSQL row-level security (17 policies, non-owner application role), checked by 10 adversarial tests across 8 cross-tenant attack classes. That testing found and fixed an RLS policy that enforced nothing and a rate-limit bypass via a spoofed <code>X-Forwarded-For</code> header. Also: refresh-token rotation, HttpOnly cookies, breached-password checks, and a backup restore drill.</p>
-
   <h3>Limits, stated plainly</h3>
   <ul class="limits">
     <li>LFW is an easy, near-frontal benchmark with pre-cropped faces. Read the result as "99.1% on LFW", not "99% accurate" in general.</li>
@@ -82,29 +112,133 @@
   </ul>
 </section>
 
-<section>
-  <h2>TABEEB: LLM-based multimodal report analysis</h2>
+<section id="security">
+  <h2>Cybersecurity: securing the face-recognition platform</h2>
+  <p class="meta">Same industry project · I security-tested my own system and fixed what broke</p>
+
+  <div class="grid">
+    <div class="stat"><b>17</b><span>row-level security policies</span></div>
+    <div class="stat"><b>10</b><span>adversarial tests</span></div>
+    <div class="stat"><b>8</b><span>attack classes</span></div>
+    <div class="stat"><b>2</b><span>live flaws found and fixed</span></div>
+  </div>
+
+  <h3>Tenant isolation</h3>
+  <p>The platform serves several tenants from one database. Isolation is enforced by PostgreSQL itself, not just by application code: each request sets a tenant context, and row-level security policies only let a query see rows that belong to that tenant. Table owners bypass RLS by default, so the application connects as a non-owner role.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 720 250" role="img" aria-labelledby="d2t d2d">
+      <title id="d2t">Tenant isolation with row-level security</title>
+      <desc id="d2d">A tenant A request passes through the API, which sets the tenant context, to PostgreSQL where a non-owner role and 17 RLS policies return only tenant A rows. A tenant B attacker is blocked at the database. A rate limiter with shared counters protects the API.</desc>
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m" d="M0 0L10 5L0 10z"/></marker></defs>
+      <rect class="b" x="8" y="70" width="152" height="70" rx="6"/><text class="t c" x="84" y="100">Request</text><text class="s c" x="84" y="118">tenant A session</text>
+      <rect class="b" x="193" y="70" width="152" height="70" rx="6"/><text class="t c" x="269" y="100">API layer</text><text class="s c" x="269" y="118">sets tenant context</text>
+      <rect class="a" x="378" y="70" width="152" height="70" rx="6"/><text class="t c" x="454" y="100">PostgreSQL</text><text class="s c" x="454" y="118">non-owner role, RLS on</text>
+      <rect class="b" x="563" y="70" width="152" height="70" rx="6"/><text class="t c" x="639" y="100">Result</text><text class="s c" x="639" y="118">tenant A rows only</text>
+      <path class="l" marker-end="url(#a2)" d="M160 105H191"/><path class="l" marker-end="url(#a2)" d="M345 105H376"/><path class="l" marker-end="url(#a2)" d="M530 105H561"/>
+      <rect class="b bad" x="359" y="4" width="190" height="44" rx="6"/><text class="t c" x="454" y="23">Tenant B attacker</text><text class="s c" x="454" y="39">read · write · guessed IDs</text>
+      <path class="l bad" marker-end="url(#a2)" d="M454 48V68"/><text class="s" x="464" y="63">0 rows</text>
+      <rect class="b" x="184" y="170" width="170" height="56" rx="6"/><text class="t c" x="269" y="194">Rate limiting</text><text class="s c" x="269" y="210">shared counter store</text>
+      <path class="l" marker-end="url(#a2)" d="M269 170V142"/>
+      <rect class="b" x="369" y="170" width="170" height="56" rx="6"/><text class="t c" x="454" y="194">17 RLS policies</text><text class="s c" x="454" y="210">row tenant = request context</text>
+      <path class="l" marker-end="url(#a2)" d="M454 170V142"/>
+    </svg>
+    <figcaption>The database, not the application, decides which rows a request can see. Even if application code is wrong, a tenant B query returns nothing from tenant A.</figcaption>
+  </figure>
+
+  <h3>What adversarial testing found</h3>
+  <p>I wrote 10 adversarial tests across 8 attack classes (cross-tenant read, write and ID guessing, among others) and ran them against my own system.</p>
+  <table class="tbl">
+    <thead><tr><th>Found</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>An RLS policy that was silently inert: it looked correct but enforced nothing.</td><td>Policy corrected and covered by a test that fails if it stops enforcing.</td></tr>
+      <tr><td>A rate-limit bypass: a spoofed <code>X-Forwarded-For</code> header let a client dodge the limit.</td><td>Bypass closed; counters moved to a shared store so limits hold across workers.</td></tr>
+      <tr><td>A camera password sitting in a tracked file.</td><td>Credentials audited and rotated.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hardening and biometric data</h3>
+  <ul class="limits">
+    <li><b>Authentication:</b> refresh-token rotation, HttpOnly cookies, breached-password checking, timing-safe login.</li>
+    <li><b>Operations:</b> backup restore drill, TLS with automated certificates, monitoring alerts.</li>
+    <li><b>Biometric data:</b> face embeddings are treated as sensitive. Edge and cloud stores are separate, no source images are kept server-side, and test data is synthetic only.</li>
+  </ul>
+</section>
+
+<section id="tabeeb">
+  <h2>TABEEB: secure, privacy-aware healthcare platform with LLM report analysis</h2>
   <p class="meta">Final Year Project · Runner-up, Projects category, VisioSpark competition</p>
-  <p>A pipeline that accepts scanned images, PDFs and text and returns patient-readable summaries flagging values outside reference ranges. I studied prompt design and decoding control in a high-stakes domain (low temperature for factual summaries, higher for conversational Q&amp;A) to find where factual fidelity breaks down, and cut token usage by about 30% with context summarisation. The retrieval-augmented design lets the model format only retrieved facts, with labelled estimates as a fallback, and works across model families (Gemini and Gemma), which showed how instruction following varies between models.</p>
-  <p><b>Open problems I want to work on:</b> faithfulness of LLM summarisation, evaluating output without ground truth, and low-resource Urdu–English NLP.</p>
+
+  <h3>Report analysis pipeline</h3>
+  <p>A pipeline that accepts scanned images, PDFs and text and returns patient-readable summaries flagging values outside reference ranges. The retrieval-augmented design lets the model format only retrieved facts, with labelled estimates as a fallback, and works across model families (Gemini and Gemma), which showed how instruction following varies between models.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 720 180" role="img" aria-labelledby="d3t d3d">
+      <title id="d3t">TABEEB report analysis pipeline</title>
+      <desc id="d3d">A report is uploaded with a server-signed upload, facts are retrieved, the LLM formats only the retrieved facts inside guardrails, and the patient gets a summary with out-of-range values flagged.</desc>
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m" d="M0 0L10 5L0 10z"/></marker></defs>
+      <rect class="b" x="8" y="40" width="152" height="70" rx="6"/><text class="t c" x="84" y="70">Upload</text><text class="s c" x="84" y="88">image · PDF · text</text>
+      <rect class="b" x="193" y="40" width="152" height="70" rx="6"/><text class="t c" x="269" y="70">Retrieve facts</text><text class="s c" x="269" y="88">from the report</text>
+      <rect class="g" x="366" y="28" width="176" height="94" rx="8"/>
+      <rect class="a" x="378" y="40" width="152" height="70" rx="6"/><text class="t c" x="454" y="70">LLM</text><text class="s c" x="454" y="88">formats retrieved facts</text>
+      <rect class="b" x="563" y="40" width="152" height="70" rx="6"/><text class="t c" x="639" y="70">Summary</text><text class="s c" x="639" y="88">out-of-range values flagged</text>
+      <path class="l" marker-end="url(#a3)" d="M160 75H191"/><path class="l" marker-end="url(#a3)" d="M345 75H376"/><path class="l" marker-end="url(#a3)" d="M530 75H561"/>
+      <text class="s c" x="84" y="145">uploads need a server-</text><text class="s c" x="84" y="160">generated signature</text>
+      <text class="s c" x="269" y="145">fact missing:</text><text class="s c" x="269" y="160">labelled estimate</text>
+      <text class="s c" x="454" y="145">guardrails: prompt injection,</text><text class="s c" x="454" y="160">jailbreaks, output constraints</text>
+    </svg>
+    <figcaption>The model only formats what was retrieved; guardrails wrap the LLM step.</figcaption>
+  </figure>
+  <p>I studied prompt design and decoding control in a high-stakes domain (low temperature for factual summaries, higher for conversational Q&amp;A) to find where factual fidelity breaks down, and cut token usage by about 30% with context summarisation.</p>
+
+  <h3>Access control and authentication</h3>
+  <p>Three roles (patient, doctor, admin) get different levels of assurance. Admins use a separate token channel with TOTP two-factor authentication, and sensitive actions such as creating another admin need an extra step-up check. Doctors are verified against the national medical council registry. Authentication endpoints are rate-limited (10 attempts per 15 minutes) against brute force.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 720 285" role="img" aria-labelledby="d4t d4d">
+      <title id="d4t">TABEEB authentication and access control</title>
+      <desc id="d4d">Patients and doctors pass token verification to a role-scoped API. Admins use a separate JWT channel, TOTP two-factor authentication, and a step-up check for sensitive actions. All authentication endpoints are rate-limited to 10 attempts per 15 minutes.</desc>
+      <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="m" d="M0 0L10 5L0 10z"/></marker></defs>
+      <rect class="g" x="205" y="10" width="180" height="245" rx="8"/>
+      <text class="s c" x="295" y="273">rate limit: 10 attempts per 15 min</text>
+      <rect class="b" x="8" y="26" width="140" height="40" rx="6"/><text class="t c" x="78" y="51">Patient</text>
+      <rect class="b" x="8" y="76" width="140" height="40" rx="6"/><text class="t c" x="78" y="93">Doctor</text><text class="s c" x="78" y="108">registry-verified</text>
+      <path class="l" marker-end="url(#a4)" d="M148 46L213 62"/><path class="l" marker-end="url(#a4)" d="M148 96L213 80"/>
+      <rect class="b" x="215" y="41" width="160" height="60" rx="6"/><text class="t c" x="295" y="68">Token verification</text><text class="s c" x="295" y="85">users</text>
+      <path class="l" marker-end="url(#a4)" d="M375 71H403"/>
+      <rect class="a" x="405" y="41" width="130" height="60" rx="6"/><text class="t c" x="470" y="68">Protected API</text><text class="s c" x="470" y="85">role-scoped access</text>
+      <rect class="b" x="555" y="31" width="157" height="80" rx="6"/><text class="t c" x="633" y="55">Real-time channels</text><text class="s c" x="633" y="73">authenticated WebSockets</text><text class="s c" x="633" y="87">role-scoped rooms</text><text class="s c" x="633" y="101">short-lived video tokens</text>
+      <rect class="b" x="8" y="180" width="140" height="50" rx="6"/><text class="t c" x="78" y="210">Admin</text>
+      <path class="l" marker-end="url(#a4)" d="M148 205H213"/>
+      <rect class="b" x="215" y="175" width="160" height="60" rx="6"/><text class="t c" x="295" y="202">Separate JWT channel</text><text class="s c" x="295" y="219">admins only</text>
+      <path class="l" marker-end="url(#a4)" d="M375 205H403"/>
+      <rect class="a" x="405" y="175" width="130" height="60" rx="6"/><text class="t c" x="470" y="202">TOTP 2FA</text><text class="s c" x="470" y="219">second factor</text>
+      <path class="l" marker-end="url(#a4)" d="M535 205H553"/>
+      <rect class="a" x="555" y="175" width="157" height="60" rx="6"/><text class="t c" x="633" y="198">Step-up check</text><text class="s c" x="633" y="214">sensitive actions,</text><text class="s c" x="633" y="228">e.g. new admin account</text>
+    </svg>
+    <figcaption>Users and admins take different authentication paths; the admin path adds a second factor and a step-up check.</figcaption>
+  </figure>
+  <ul class="limits">
+    <li><b>Uploads:</b> server-generated signed upload signatures, so clients cannot upload arbitrary files.</li>
+    <li><b>Real-time:</b> authenticated WebSockets, role-scoped rooms, short-lived signed video tokens.</li>
+    <li><b>AI security:</b> prompt-injection and jailbreak resistance and output constraints for the LLM, plus an analysis of the privacy risk of sending patient documents to third-party AI APIs.</li>
+  </ul>
+  <p><b>Open problems I want to work on:</b> faithfulness of LLM summarisation, evaluating output without ground truth, privacy and security of LLM pipelines handling sensitive documents, and low-resource Urdu–English NLP.</p>
 </section>
 
 <section id="experience">
   <h2>Experience &amp; education</h2>
   <div class="row"><b>Software Engineer, Inspirer Technologies, Lahore</b><i>Jun 2026 – present</i></div>
-  <p>Designed, built and field-tuned the face-recognition system above. Own the HR and Finance modules of a company-wide ERP.</p>
+  <p>Designed, built, security-tested and field-tuned the face-recognition system above. Own the HR and Finance modules of a company-wide ERP, translating payroll and financial rules into a consistent relational data model for sensitive employee, payroll and financial records.</p>
   <div class="row"><b>Backend Developer Intern, Amzone, Lahore</b><i>Jul – Aug 2025</i></div>
   <p>Fixed data-synchronisation problems in a production e-commerce wish-list feature; designed the product, order and inventory schema.</p>
   <div class="row"><b>BS Computer Science, COMSATS University Islamabad, Lahore</b><i>2022 – 2026</i></div>
   <p>CGPA 3.72 / 4.00; 4.00 in Semester 7 including the Final Year Project.</p>
   <div class="row"><b>Other projects</b></div>
-  <p>Traffic signal detection in MATLAB (Computer Vision course) · peer-to-peer file-sharing service with custom peer discovery.</p>
-  <p class="note"><b>Skills:</b> Python, MATLAB, SQL · PyTorch, scikit-learn, OpenCV · ROC / EER / TAR@FAR evaluation, threshold calibration · LLM APIs, prompt design, RAG · Git, Docker.</p>
+  <p>Traffic signal detection in MATLAB (Computer Vision course) · peer-to-peer file-sharing service with custom peer discovery and transfer coordination.</p>
+  <p class="note"><b>Skills:</b> Python, MATLAB, SQL · PyTorch, scikit-learn, OpenCV · ROC / EER / TAR@FAR evaluation, threshold calibration · PostgreSQL row-level security, JWT and refresh-token auth, TOTP 2FA, rate limiting, TLS automation, adversarial testing, Wireshark, Burp Suite · LLM APIs, prompt design, RAG, guardrail design · Git, GitHub, Docker.</p>
 </section>
 
 <section id="contact">
   <h2>Contact</h2>
-  <p>Email <a href="mailto:moeez4316@gmail.com">moeez4316@gmail.com</a> · WeChat <b>moeez_ahmed</b> · <a href="https://github.com/moeez4316">github.com/moeez4316</a> · Lahore, Pakistan</p>
+  <p>Email <a href="mailto:moeez4316@gmail.com">moeez4316@gmail.com</a> · <a href="mailto:moeez.ahmed.cs@gmail.com">moeez.ahmed.cs@gmail.com</a> · WeChat <b>moeez_ahmed</b> · <a href="https://github.com/moeez4316">github.com/moeez4316</a> · Lahore, Pakistan</p>
 </section>
 </main>
 
