@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moeez Ahmed – Computer Science Researcher</title>
+<meta name="description" content="Moeez Ahmed: BS Computer Science (CGPA 3.72/4.00). Interests: machine learning, computer vision, LLMs and cybersecurity. Applying for a master's in China.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <nav>
+    <a href="#about">About</a><a href="#research">Research</a><a href="#project">Face recognition</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="about">
+  <img src="assets/photo.jpg" alt="Portrait of Moeez Ahmed" width="220" height="288">
+  <div>
+    <h1>Moeez Ahmed</h1>
+    <p class="lead">BS Computer Science, COMSATS University Islamabad, Lahore · CGPA 3.72 / 4.00</p>
+    <p>I want to grow into an independent researcher, learning research methods under expert supervision in a master's programme in China. My interests are machine learning, computer vision, large language models and cybersecurity. What I care about most is making models reliable: rigorous evaluation, calibration, and knowing where a system breaks.</p>
+    <p class="links">
+      <a class="btn" href="assets/Moeez_Ahmed_CV.pdf">Download CV (PDF)</a>
+      <a class="btn ghost" href="https://github.com/moeez4316">GitHub</a>
+      <a class="btn ghost" href="mailto:moeez4316@gmail.com">Email</a>
+    </p>
+  </div>
+</section>
+
+<section id="research">
+  <h2>Research interests</h2>
+  <ul class="tags">
+    <li>Machine learning &amp; deep learning</li>
+    <li>Computer vision</li>
+    <li>Metric learning &amp; open-set recognition</li>
+    <li>Evaluation &amp; calibration</li>
+    <li>LLMs &amp; retrieval-augmented generation</li>
+    <li>Hallucination &amp; faithfulness</li>
+    <li>Multimodal learning</li>
+    <li>Cyberspace / information security</li>
+  </ul>
+  <p class="note">Coursework: 4.00 / 4.00 in Machine Learning, Linear Algebra, Algorithms and Information Security; 3.66 in Artificial Intelligence. Final Year Project 4.00, supervised by Prof. Dr. Zulfiqar Habib.</p>
+</section>
+
+<section id="project">
+  <h2>Multi-camera face-recognition attendance system</h2>
+  <p class="meta">Industry project, 2026 · Inspirer Technologies · technical write-up of the recognition core</p>
+
+  <h3>Pipeline</h3>
+  <p class="pipeline"><span>Camera frame</span><span>YuNet detection</span><span>5-point alignment</span><span>SFace 128-d embedding</span><span>Cosine match</span></p>
+  <p>Each camera runs in its own worker thread; a shared inference thread embeds detected faces and compares them with enrolled identities (multi-image embeddings are averaged per person). Detection and recognition both use Apache-2.0 models from the OpenCV Zoo, run through <code>cv2.dnn</code>. I replaced an earlier non-commercial-licensed model (InsightFace <code>buffalo_l</code>) after auditing the licences of the model weights and their training data, accepting a lighter model in exchange for a deployable one.</p>
+
+  <h3>Benchmark: LFW verification</h3>
+  <p>Standard 6,000-pair, 10-fold protocol. The threshold is chosen on nine folds and scored on the held-out fold. Reproducible with a single script; 0 of 6,000 pairs had no face detected.</p>
+  <div class="grid">
+    <div class="stat"><b>99.1% ± 0.4%</b><span>verification accuracy</span></div>
+    <div class="stat"><b>0.9965</b><span>ROC-AUC</span></div>
+    <div class="stat"><b>1.05%</b><span>equal error rate (cosine 0.289)</span></div>
+    <div class="stat"><b>98.9%</b><span>TAR @ 1% FAR</span></div>
+    <div class="stat"><b>98.1%</b><span>TAR @ 0.1% FAR</span></div>
+  </div>
+  <figure>
+    <img src="assets/lfw_roc.png" alt="LFW verification ROC curve for YuNet plus SFace, AUC 0.997" width="420" height="420" loading="lazy">
+    <figcaption>ROC on a log-FAR axis (YuNet + SFace, AUC 0.997).</figcaption>
+  </figure>
+
+  <h3>Threshold calibration from field failures</h3>
+  <p>Benchmark accuracy did not transfer cleanly to live cameras: people at a distance were misidentified. I recalibrated the matching threshold <b>0.36 → 0.51 → 0.46</b>, analysing the false-accept versus false-reject trade-off through inter-class and intra-class similarity margins. At the deployed threshold of 0.46 the LFW result is <b>0 false accepts in 3,000 impostor pairs</b> at a <b>5.5% false-reject rate</b>. I also compared the lightweight-versus-accuracy trade-off of SFace against ArcFace-class models.</p>
+
+  <h3>Security of the surrounding system</h3>
+  <p>Tenant isolation uses PostgreSQL row-level security (17 policies, non-owner application role), checked by 10 adversarial tests across 8 cross-tenant attack classes. That testing found and fixed an RLS policy that enforced nothing and a rate-limit bypass via a spoofed <code>X-Forwarded-For</code> header. Also: refresh-token rotation, HttpOnly cookies, breached-password checks, and a backup restore drill.</p>
+
+  <h3>Limits, stated plainly</h3>
+  <ul class="limits">
+    <li>LFW is an easy, near-frontal benchmark with pre-cropped faces. Read the result as "99.1% on LFW", not "99% accurate" in general.</li>
+    <li>SFace is a pretrained OpenCV Zoo model. I evaluated and calibrated it; I did not train it.</li>
+    <li>0 false accepts in 3,000 pairs bounds the true rate at roughly 0.1% (95% confidence).</li>
+    <li>The real deployment is a handful of people on a few cameras. Larger-scale load tests (37,500 simulated identities, 150 devices) measured the backend, not recognition accuracy.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>TABEEB: LLM-based multimodal report analysis</h2>
+  <p class="meta">Final Year Project · Runner-up, Projects category, VisioSpark competition</p>
+  <p>A pipeline that accepts scanned images, PDFs and text and returns patient-readable summaries flagging values outside reference ranges. I studied prompt design and decoding control in a high-stakes domain (low temperature for factual summaries, higher for conversational Q&amp;A) to find where factual fidelity breaks down, and cut token usage by about 30% with context summarisation. The retrieval-augmented design lets the model format only retrieved facts, with labelled estimates as a fallback, and works across model families (Gemini and Gemma), which showed how instruction following varies between models.</p>
+  <p><b>Open problems I want to work on:</b> faithfulness of LLM summarisation, evaluating output without ground truth, and low-resource Urdu–English NLP.</p>
+</section>
+
+<section id="experience">
+  <h2>Experience &amp; education</h2>
+  <div class="row"><b>Software Engineer, Inspirer Technologies, Lahore</b><i>Jun 2026 – present</i></div>
+  <p>Designed, built and field-tuned the face-recognition system above. Own the HR and Finance modules of a company-wide ERP.</p>
+  <div class="row"><b>Backend Developer Intern, Amzone, Lahore</b><i>Jul – Aug 2025</i></div>
+  <p>Fixed data-synchronisation problems in a production e-commerce wish-list feature; designed the product, order and inventory schema.</p>
+  <div class="row"><b>BS Computer Science, COMSATS University Islamabad, Lahore</b><i>2022 – 2026</i></div>
+  <p>CGPA 3.72 / 4.00; 4.00 in Semester 7 including the Final Year Project.</p>
+  <div class="row"><b>Other projects</b></div>
+  <p>Traffic signal detection in MATLAB (Computer Vision course) · peer-to-peer file-sharing service with custom peer discovery.</p>
+  <p class="note"><b>Skills:</b> Python, MATLAB, SQL · PyTorch, scikit-learn, OpenCV · ROC / EER / TAR@FAR evaluation, threshold calibration · LLM APIs, prompt design, RAG · Git, Docker.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email <a href="mailto:moeez4316@gmail.com">moeez4316@gmail.com</a> · WeChat <b>moeez_ahmed</b> · <a href="https://github.com/moeez4316">github.com/moeez4316</a> · Lahore, Pakistan</p>
+</section>
+</main>
+
+<footer>© 2026 Moeez Ahmed</footer>
+</body>
+</html>
